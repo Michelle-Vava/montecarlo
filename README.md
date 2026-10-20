@@ -145,6 +145,8 @@ Only the numbers and formulas written in the model. There's no input from users,
 
 ## How it's tested
 
+See [TESTING.md](TESTING.md) for how to run the tests and what each one checks.
+
 - `npm test` runs 19 tests with Node's built-in test runner.
 - **Every distribution is checked against its theory:** for example, 200,000 samples of `normal(100, 15)` must have a mean within 0.15 of 100 and about 68.3% of values within one standard deviation.
 - Model tests cover formula order, reproducible seeds, custom distributions, circular formulas, unknown variables, `NaN`/`Infinity`, and input validation.
