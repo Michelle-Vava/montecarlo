@@ -1,10 +1,15 @@
 import type { Random } from './random.ts';
 
-/** Something that can be sampled: an uncertain input such as "between 5 and 10". */
+/**
+ * Something that can be sampled: an uncertain input such as "between 5 and 10".
+ * Implement this to add your own distribution; models accept any object with `sample`.
+ */
 export interface Distribution {
+  /** A short name, e.g. "uniform". */
   readonly kind: string;
-  /** The true average of the distribution, used to validate samples in tests. */
-  readonly mean: number;
+  /** The true average of the distribution, if known. Useful for checking samples in tests. */
+  readonly mean?: number;
+  /** Return one value. Use only `random` for randomness so seeded runs stay reproducible. */
   sample(random: Random): number;
 }
 

@@ -44,7 +44,7 @@ test('triangular: stays in range, mean is (min + mode + max) / 3, peak near the 
   const d = triangular(0, 2, 10);
   const xs = samples(d);
   assert.ok(xs.every((x) => x >= 0 && x <= 10));
-  close(mean(xs), d.mean, 0.03, 'mean');
+  close(mean(xs), d.mean!, 0.03, 'mean');
   // P(x < mode) = (mode - min) / (max - min) = 0.2
   close(xs.filter((x) => x < 2).length / N, 0.2, 0.005, 'share below mode');
 });

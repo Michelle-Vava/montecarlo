@@ -1,6 +1,19 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { chance, model, triangular, uniform } from '../src/index.ts';
+import { chance, model, triangular, uniform, type Distribution } from '../src/index.ts';
+
+test('custom distributions plug in like built-in ones and stay reproducible', () => {
+  // Resample from a developer-supplied array of values.
+  const fromSamples = (values: number[]): Distribution => ({
+    kind: 'fromSamples',
+    sample: (random) => values[Math.floor(random() * values.length)]!,
+  });
+  const m = model({ x: fromSamples([2, 4, 6]), doubled: ({ x }) => x! * 2 });
+  const r = m.run({ iterations: 3000, seed: 5 });
+  assert.ok(r.values('x').every((v) => [2, 4, 6].includes(v)));
+  assert.ok(Math.abs(r.mean('x') - 4) < 0.1);
+  assert.deepEqual(m.run({ iterations: 3000, seed: 5 }).values('doubled'), r.values('doubled'));
+});
 
 test('formulas are calculated from the same scenario values', () => {
   const m = model({

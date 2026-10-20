@@ -2,7 +2,7 @@
 
 montecarlo is a TypeScript library for Monte Carlo simulation: describe the uncertain parts of a situation, run thousands of scenarios, and get the odds. It works only on the numbers and formulas in a model: no user input, files, storage or network.
 
-**Where it's going:** a small, dependable engine that developers can put inside estimating and planning tools, with answers that are reproducible, tested against theory, and explained in plain terms.
+**Where it's going:** a small, extensible engine that developers can put inside planning and forecasting features, with answers that are reproducible, tested against theory, and explained in plain terms.
 
 ## Principles
 
@@ -18,6 +18,7 @@ montecarlo is a TypeScript library for Monte Carlo simulation: describe the unce
 
 - [x] Seeded random generator (mulberry32)
 - [x] Distributions: `uniform`, `triangular`, `normal`, `chance`, `oneOf`, with parameter validation
+- [x] Custom distributions through the exported `Distribution` interface
 - [x] Models with fixed numbers, distributions and formulas, in any order
 - [x] Errors for circular formulas, unknown variables, `NaN` / `Infinity`
 - [x] Results: mean, standard deviation, min, max, percentiles, probability, summary
@@ -32,9 +33,9 @@ montecarlo is a TypeScript library for Monte Carlo simulation: describe the unce
 
 - [ ] `pert(min, mostLikely, max)`: smoother than triangular, standard in project estimating
 - [ ] `lognormal`, `beta`, `poisson`, `discrete` from a table
-- [ ] `fromData(values)`: resample from past numbers
+- [ ] `fromSamples(values)`: resample from a developer-supplied array of values
 - [ ] `clamp` / truncation (e.g. a normal that can't go below 0)
-- [ ] Correlated inputs (if materials cost goes up, so does shipping)
+- [ ] Correlated inputs (if one task runs long, a related task often does too)
 
 **Done when:** each distribution's mean, spread and shape are tested against theory.
 
@@ -62,8 +63,10 @@ montecarlo is a TypeScript library for Monte Carlo simulation: describe the unce
 
 ---
 
-## v0.5: Developer experience
+## v0.5: Developer experience and extension points
 
+- [ ] `Statistic` interface: add your own result measures alongside mean and percentiles
+- [ ] `StoppingRule` interface: decide when a run has done enough scenarios (used by v0.3's convergence)
 - [ ] Typed models: unknown variable names in formulas become compile-time errors
 - [ ] Histogram helper (bins and counts) for charts
 - [ ] Export results as CSV / JSON
@@ -76,7 +79,7 @@ montecarlo is a TypeScript library for Monte Carlo simulation: describe the unce
 - [ ] Publish to npm
 - [ ] Run large simulations in a Web Worker / worker thread without blocking
 - [ ] Performance benchmarks and a target (e.g. 1 million scenarios of a 10-variable model)
-- [ ] Docs with worked examples: project estimate, budget, inventory, queue wait times
+- [ ] Docs with worked examples: release timeline, server capacity, inventory levels, queue wait times
 - [ ] Semantic versioning and a CHANGELOG
 
 ## Ideas for later
