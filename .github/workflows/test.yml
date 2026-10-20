@@ -3,6 +3,7 @@ name: test
 on:
   push:
   pull_request:
+  workflow_dispatch:   # adds a "Run workflow" button on the Actions tab
 
 jobs:
   test:
@@ -20,3 +21,18 @@ jobs:
       - run: npm run typecheck
       - run: npm test
       - run: npm run demo
+      - name: Show tests and demo on the run page
+        if: matrix.os == 'ubuntu-latest' && matrix.node == 24
+        env:
+          NO_COLOR: 1
+        run: |
+          {
+            echo '## Tests'
+            echo '```'
+            node --test --test-reporter=spec "test/*.test.ts"
+            echo '```'
+            echo '## Demo: 10,000 simulated software releases'
+            echo '```'
+            npm run demo --silent
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
