@@ -58,7 +58,7 @@ Renovation estimate: 10,000 simulated projects (seed 42)
 
 My work is replacing complex spreadsheets with software people can trust. Many of those spreadsheets are estimates: costs, timelines, budgets, each built on a single "best guess" number in every cell. The honest answer is usually a range, and the way to handle ranges is a Monte Carlo simulation.
 
-In spreadsheets that means paid add-ins (such as @RISK or Crystal Ball). On the web there are apps like Guesstimate, and languages like Squiggle. But for a JavaScript or TypeScript developer who wants to put "what are the odds?" into their own app, there's no library: only the building blocks (random numbers, statistics functions). montecarlo is that library.
+In spreadsheets that usually means paid add-ins (such as @RISK or Crystal Ball). I wanted a small TypeScript library where the model is plain code: inputs and formulas side by side, runs that can be repeated exactly from a seed, and statistics I can trust because they're tested against theory.
 
 **Why the history starts here:** montecarlo is a new project, started in October 2026, so this repository holds its full history from the first commit.
 
@@ -127,6 +127,17 @@ Only the numbers and formulas you write in your model. There's no input from use
 - **Every distribution is checked against its theory:** for example, 200,000 samples of `normal(100, 15)` must have a mean within 0.15 of 100 and about 68.3% of values within one standard deviation.
 - Model tests cover formula order, reproducible seeds, circular formulas, unknown variables, `NaN`/`Infinity`, and input validation.
 - GitHub Actions runs the type check, tests and demo on **Windows, macOS and Linux** with Node 22 and 24 on every push.
+
+## How it compares
+
+Monte Carlo tools already exist; montecarlo is aiming at a specific spot among them:
+
+- **Spreadsheet add-ins** (@RISK, Crystal Ball) and **web apps** (Guesstimate) are great for working by hand, but they aren't libraries you can build into your own app.
+- **Squiggle** is its own language for estimation, not plain TypeScript.
+- **Statistics libraries** (jStat, stdlib) provide distributions and random numbers but not a model of variables and formulas.
+- **Other npm packages** take different approaches: `monte-carlo-simulator` is a CLI driven by YAML templates, `@hugov/correl-range` focuses on correlated ranges, and `@tangent.to/mc` does Markov Chain Monte Carlo for Bayesian inference.
+
+montecarlo's focus is a **code-first model API**: variables, distributions and formulas in one TypeScript object, seeded and reproducible runs, clear errors (circular formulas, unknown names, `NaN`), and distributions tested against their theory.
 
 ## Roadmap
 
